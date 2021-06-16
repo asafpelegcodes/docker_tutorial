@@ -1,0 +1,13 @@
+version: "3"
+services:
+  mysite:
+    build:
+      context: .
+    ports:
+    - 8080:80
+    environment:
+    - FIRSTNAME=
+    - LASTNAME=
+    - EMAILHANDLE=
+    - EMAILHOST=
+
