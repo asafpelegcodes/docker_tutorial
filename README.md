@@ -35,7 +35,7 @@ An image vs. container is analogous to the software installed on your disk and t
 The other important feature of images is the concept of layering. 
 Each command that Docker executes in your Dockerfile creates a new layer.
 Layers are tranferrable, excutable, and cached so that subsequent builds execute more quickly. 
-The final layer that is output from the build process are typically tagged and shared to make it easy to build other images from that layer.
+The final layer that is output from the build process are tagged and shared to make it easy to build other images from that layer.
 
 ## Docker Exercises
 The following exercises will use a popular web server called NGINX to launch a sample personal website and teach the following:
@@ -75,10 +75,10 @@ The `COPY` command is used to add files into the image
 * The container starts, and some logs from the nginx service will output
 * There are a couple of problems with the first run:
     * There is no way to access the web server on the container from your browser
-    * Your container doesn't have a consistent name, container ids can always be used by names are easier to remember      
-    * The container is running the foreground and command line has been taken
+    * Your container doesn't have a consistent name, container ids can always be used but  names are easier to remember      
+    * The container is running in the foreground and command line has been taken
 * Stop the container by typing `ctrl+c`
-* Start the container in the background and bind your local port 8080 to it `docker run -d -p 8080:80 --name mysite mysite` 
+* Start the container in the background, bind your local port 8080 to it, and give it a name `docker run -d -p 8080:80 --name mysite mysite` 
     * `-d` starts the container as a background process
     * `-p 8080:80` binds your local port 8080 -> port 80 on the container
     * `--name mysite` names your running container with a user defined label
@@ -106,7 +106,7 @@ The `COPY` command is used to add files into the image
   * `mysite` specifies the container
   * `bash` is the command to execute
 * Access the static directory `cd /usr/share/nginx/html/`
-* Use the following command to replace the generic firstname in the index with you own:
+* Use the following command to replace the generic firstname in the index with your own:
    * Change the `YourName` string below
    * `sed -i s#@FirstName#YourName#g index.html`
 * Refresh your browser to see the changes take effect immmediately
@@ -135,7 +135,7 @@ This technique known as mounting can be accomplished with the `-v` argument to t
 
 #### Modifying the initialization command
 When a container starts it is instructed to run the entry point or command.
-In order to replace that existing command simply add it to the end of the run command
+In order to replace that existing command simply add it to the end of `docker run`
 * Display nginx command line help: `docker run -d -p 8080:80 --name mysite --rm mysite nginx -h`
 * Run `docker logs mysite` to see the output of help
 
@@ -144,13 +144,13 @@ Making it easy to update the names in the personal website allows others to easi
 
 As previously mentioned when a container starts it runs a command to kick things off.
 In the case of NGINX and our sample personal website the default start command is `nginx -g 'daemon off;'`
-Until now the Dockerfile took advantage of this default inherited from the `nginx` base image
-To allow users to customize the personal website, building on and replacing the default command is necessary
+Until now the Dockerfile took advantage of this default inherited from the `nginx` base image.
+This section teaches how to replace the default command to allow users to customize the personal website.
 
 #### Updating the default command
 * `CMD` is the Dockerfile directive used to set the start command
 * Add `COPY startup.sh .` to add `startup.sh` to the image  
-* Add `CMD ./startup.sh` to the end of your dockerfile
+* Add `CMD ./startup.sh` to the end of your dockerfile, now `startup.sh` will run when the container starts.
 * This bash script will:
     * optionally replace the sample values in the personal website based on environment variables
     * delegate execution to nginx at the end
@@ -188,8 +188,8 @@ The included compose file mimics the `docker run` command in the previous exerci
 Docker's public registry for images contains endless images to use or build from.
 
 Anyone can upload images but the most common ones are those considered "Docker Official Images".
-This curated list of images which can easily be distinguished by the tag since they have no namespace.
-Examples include `nginx`, `mysql`, `ubuntu`, `java`, `python`, etc
+This curated list of images can easily be distinguished by the tag since they have no namespace.
+Examples include `nginx`, `mysql`, `ubuntu`, `java`, `python`, etc.
 These official images are an excellent building blocks for creating custom images but only represent a minute amount of all the images available.
 
 ##### References
