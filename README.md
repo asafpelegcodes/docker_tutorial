@@ -99,7 +99,7 @@ The `COPY` command is used to add files into the image
 
 #### Executing commands on a running container
 * Run `docker exec mysite echo "hello from the container"` to execute an echo on the container
-* For more flexible access to the container is typical to get an interactive bash shell with `docker exec -it mysite bash`
+* For more flexible access to the container it is typical to get an interactive bash shell with `docker exec -it mysite bash`
 * Command breakdown:
   * `docker exec` is to execute commands on the container
   * `-it` gives an pseudo terminal and keeps standard input open
@@ -110,6 +110,7 @@ The `COPY` command is used to add files into the image
    * Change the `YourName` string below
    * `sed -i s#@FirstName#YourName#g index.html`
 * Refresh your browser to see the changes take effect immmediately
+* type `ctlr+d` to exit the containers shell
 
 #### Stopping & removing containers
 * Run `docker stop mysite` to stop the container
@@ -136,8 +137,8 @@ This technique known as mounting can be accomplished with the `-v` argument to t
 #### Modifying the initialization command
 When a container starts it is instructed to run the entry point or command.
 In order to replace that existing command simply add it to the end of `docker run`
-* Display nginx command line help: `docker run -d -p 8080:80 --name mysite --rm mysite nginx -h`
-* Run `docker logs mysite` to see the output of help
+* Display nginx command line help: `docker run -p 8080:80 --name mysite --rm mysite nginx -h`
+* Note that the argument to run the process in the background (`-d`) is omitted to view the logs  
 
 ### Customizing The Image for Distribution
 Making it easy to update the names in the personal website allows others to easily use the image
